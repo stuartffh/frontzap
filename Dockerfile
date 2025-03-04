@@ -1,29 +1,38 @@
+# Etapa 1: Construção da aplicação
 FROM node:18-alpine AS builder
 
-# Definir diretório de trabalho
+# Define o diretório de trabalho
 WORKDIR /app
 
-# Copiar package.json e package-lock.json
-COPY package*.json ./
+# Copia os arquivos do package.json e package-lock.json para instalar as dependências
+COPY package.json package-lock.json ./
 
-# Instalar dependências
+# Instala as dependências
 RUN npm install
 
-# Copiar código da aplicação
+# Copia o restante do código para dentro do container
 COPY . .
 
-# Criar build de produção
+# Builda a aplicação Next.js
 RUN npm run build
 
-# Criar imagem final
+# Etapa 2: Servir a aplicação otimizada
 FROM node:18-alpine
+
+# Define o diretório de trabalho
 WORKDIR /app
 
-# Copiar build gerado
-COPY --from=builder /app .
+# Copia apenas os arquivos necessários da etapa de build
+COPY --from=builder /app/package.json /app/package-lock.json ./
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/node_modules ./node_modules
 
-# Expor a porta do Next.js
+# Define a variável de ambiente para produção
+ENV NODE_ENV=production
+
+# Expõe a porta padrão do Next.js
 EXPOSE 3000
 
-# Comando para iniciar o servidor
+# Comando para iniciar a aplicação
 CMD ["npm", "run", "start"]
