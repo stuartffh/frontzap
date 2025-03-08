@@ -1,9 +1,6 @@
-import { link } from "fs";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import type { type } from "os";
-import type { title } from "process";
-
+import Script from "next/script";
 import "styles/globals.css";
 
 export const metadata: Metadata = {
@@ -16,18 +13,23 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-<head>
-  <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
-  <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-</head>
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+        <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
+        {/* Script do GetButton para o Chat */}
+        <Script
+          src="https://static.getbutton.io/widget/bundle.js?id=4PN99"
+          strategy="lazyOnload"
+        />
+      </head>
 
       <body className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
