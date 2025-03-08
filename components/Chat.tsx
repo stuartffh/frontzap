@@ -107,7 +107,7 @@ export default function Assistant({ closeChat }: { closeChat: () => void }) {
       <div className="flex">
         <input
           type="text"
-          className="flex-grow p-2 bg-gray-700 text-white placeholder-gray-400 rounded-l-lg focus:outline-none"
+          className="flex-grow p-2 bg-gray-700 rounded-l-lg"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
